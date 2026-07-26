@@ -1,7 +1,6 @@
 datasource db {
-  provider = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -16,7 +15,6 @@ model User {
   password  String
   nickname  String
   createdAt DateTime  @default(now())
-  role      String    @default("user") @db.VarChar(50)
   posts     Post[]
   comments  Comment[]
 }
@@ -26,7 +24,7 @@ model Post {
   id        Int       @id @default(autoincrement())
   category  String
   title     String
-  body      String
+  body      String    @db.Text
   createdAt DateTime  @default(now())
   authorId  Int?
   author    User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
@@ -36,7 +34,7 @@ model Post {
 // 댓글
 model Comment {
   id        Int      @id @default(autoincrement())
-  content   String
+  content   String   @db.Text
   createdAt DateTime @default(now())
   postId    Int
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
@@ -49,7 +47,7 @@ model Report {
   id          Int      @id @default(autoincrement())
   site        String
   type        String
-  description String
-  status      String   @default("pending")
+  description String   @db.Text
+  status      String   @default("pending") // pending, resolved 등
   createdAt   DateTime @default(now())
 }
