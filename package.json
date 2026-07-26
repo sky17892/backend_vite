@@ -1,0 +1,36 @@
+{
+  "name": "casino_backend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "prisma:push": "npx prisma db push",
+    "prisma:generate": "npx prisma generate",
+    "dev": "npm run prisma:generate && node server.js --host 0.0.0.0",
+    "build": "npm install && npm run prisma:push && npm run prisma:generate && vite build",
+    "vercel-build": "npx prisma generate",
+    "start": "cross-env NODE_ENV=production node server.js --host 0.0.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.1",
+    "cross-env": "^10.1.0",
+    "prisma": "^5.22.0",
+    "tsx": "^4.23.1",
+    "typescript": "~6.0.2",
+    "vite": "^8.1.5"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "axios": "^1.18.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  },
+  "description": "",
+  "main": "server.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
