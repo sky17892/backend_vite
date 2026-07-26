@@ -12,7 +12,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ['https://sky10024.dothome.co.kr'],
+    origin: ['https://sky18080.dothome.co.kr'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
