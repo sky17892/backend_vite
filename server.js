@@ -19,6 +19,8 @@ const isProduction = process.env.NODE_ENV === 'production';
 // `fake-jwt-token-${user.id}` 형식 토큰에서 userId를 꺼낸다.
 // (진짜 JWT로 바꾸면 이 함수만 교체하면 됨)
 // ==========================================
+//
+
 function getUserIdFromReq(req) {
   const auth = req.headers.authorization;
   if (!auth) return null;
