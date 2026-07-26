@@ -20,5 +20,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*", "src/server.js", "src/vite.config.tsg.ts"]
+  "include": ["src/**/*", "src/server.js", "src/vite.config.tsg.ts", "api", "api/index.js"]
 }
