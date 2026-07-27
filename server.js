@@ -143,7 +143,8 @@ async function startServer() {
 
       const posts = await prisma.post.findMany({
         where,
-        include: { author: { select: { nickname: true } } },
+        include: { author: { select: { nickname: true } },
+                  _count: { select: { comments: true } }, },
         orderBy: { createdAt: 'desc' },
       });
       res.json(posts);
