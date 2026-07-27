@@ -162,7 +162,8 @@ async function startServer() {
         include: {
           author: { select: { nickname: true } },
           comments: {
-            include: { author: { select: { nickname: true } } },
+            include: { author: { select: { nickname: true } },
+                      _count: { select: { comments: true } }, },
             orderBy: { createdAt: 'asc' },
           },
         },
