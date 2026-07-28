@@ -61,34 +61,36 @@ async function startServer() {
   // 1. Express 앱 객체 생성 (반드시 최상단 위치!)
   const app = express();
 
+  app.use((req, res, next) => {
+    const origin = req.headers.origin;
+
   const allowedOrigins = [
     'https://sky10024.dothome.co.kr',
     'https://sky18080.dothome.co.kr', // 닷홈 도메인 추가
     'http://localhost:9000'
   ];
 
-  // 2. CORS 표준 미들웨어 설정 (중복 헤더 설정 제거)
-  const corsOptions = {
-    origin: function (origin, callback) {
-      // origin이 없거나(동일 출처/서버 간 통신) allowedOrigins에 포함된 경우 허용
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(null, true); // CORS 완전 개방을 원하시면 true로 통일하셔도 됩니다.
-      }
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
-    optionsSuccessStatus: 200 // 구형 브라우저 대응 (204 -> 200)
-  };
+  if (origin && allowedOrigins.includes(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+    } else {
+      // 그 외 도메인 혹은 개발 편의용
+      res.setHeader('Access-Control-Allow-Origin', origin || '*');
+    }
 
-  app.use(cors(corsOptions));
-  
-  // ★ Preflight(사전 탐색) OPTIONS 요청 전역 허용 (핵심!)
-  app.options('*', cors(corsOptions));
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
 
-  // 2. Body Parser 설정
+    // ★ 브라우저가 보낸 사전 점검(OPTIONS) 요청이면
+    // 다른 미들웨어나 DB 조회를 거치지 않고 "즉시 200 OK"로 응답 종료!
+    if (req.method === 'OPTIONS') {
+      return res.status(200).end();
+    }
+
+    next();
+  });
+
+  // Body Parser 설정 (반드시 OPTIONS 미들웨어 아래에 위치)
   app.use(express.json());
 
   // ==========================================
