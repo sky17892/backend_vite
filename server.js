@@ -65,7 +65,7 @@ async function startServer() {
     const origin = req.headers.origin;
 
   const allowedOrigins = [
-    'https://sky10024.dothome.co.kr',    
+    'https://sky10024.dothome.co.kr',
     'http://localhost:9000'
   ];
 
