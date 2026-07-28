@@ -64,7 +64,7 @@ async function startServer() {
   // 2. CORS 표준 미들웨어 설정 (중복 헤더 설정 제거)
     app.use(
     cors({
-      origin: ['https://sky10024.dothome.co.kr'],
+      origin: ['https://sky10024.dothome.co.kr', 'http://localhost:9000'],
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
