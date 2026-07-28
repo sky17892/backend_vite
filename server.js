@@ -65,8 +65,7 @@ async function startServer() {
     const origin = req.headers.origin;
 
   const allowedOrigins = [
-    'https://sky10024.dothome.co.kr',
-    'https://sky18080.dothome.co.kr', // 닷홈 도메인 추가
+    'https://sky10024.dothome.co.kr',    
     'http://localhost:9000'
   ];
 
